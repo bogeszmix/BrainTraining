@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="upper_linearlayout_padding_left_portrait">8dp</dimen>
+    <dimen name="upper_linearlayout_padding_right_portrait">8dp</dimen>
+    <dimen name="land_score_txt_size">36sp</dimen>
+    <dimen name="layout_score_layer_margin_top">8dp</dimen>
+    <dimen name="score_layer_txt_size">20sp</dimen>
+    <dimen name="land_score_layer_txt_size">16sp</dimen>
+    <dimen name="score_layer_separator_margin_left">7dp</dimen>
+    <dimen name="score_layer_separator_margin_right">7dp</dimen>
+    <dimen name="layout_main_scene_padding">8dp</dimen>
+    <dimen name="main_scene_question_number_margin_bottom">8dp</dimen>
+    <dimen name="main_scene_question_txt_size">24sp</dimen>
+    <dimen name="main_scene_real_question_margin_bottom">10dp</dimen>
+    <dimen name="main_scene_real_question_txt_size">20sp</dimen>
+    <dimen name="layout_answers_container_margin_bottom">12dp</dimen>
+    <dimen name="layout_answer_item_margin_bottom">8dp</dimen>
+    <dimen name="answer_txt_size">20sp</dimen>
+    <dimen name="btn_back_txt_size">20sp</dimen>
+    <dimen name="btn_next_txt_size">20sp</dimen>
+    <dimen name="answer_char_margin_right">8dp</dimen>
+    <dimen name="layout_answer_right_marg_left">8dp</dimen>
+    <dimen name="score_txt_size">46sp</dimen>
+    <dimen name="land_main_scene_real_question_margin_bottom">5dp</dimen>
+    <dimen name="land_main_scene_question_number_margin_bottom">0dp</dimen>
+    <dimen name="land_layout_answers_container_margin_bottom">4dp</dimen>
+    <dimen name="land_layout_answer_item_margin_bottom">2dp</dimen>
+</resources>
