@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="main_text_color">#666</color>
+    <color name="colorPrimary">#263238</color>
+    <color name="main_scene_buttons_color">#00C853</color>
+    <color name="colorPrimaryDark">#009688</color>
+    <color name="colorAccent">#4db6ac</color>
+    <color name="main_layout_bg">#DCEDC8</color>
+    <color name="score_txt_color">#FF5722</color>
+    <color name="score_layer_txt_color">#4DD0E1</color>
+    <color name="main_scene_question_txt_color">#263238</color>
+    <color name="main_scene_real_question_txt_color">#263238</color>
+    <color name="answer_txt_color">#ffffff</color>
+    <color name="btn_back_txt_color">#F5F5F5</color>
+    <color name="btn_next_txt_color">#F5F5F5</color>
 </resources>
