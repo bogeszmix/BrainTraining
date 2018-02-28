@@ -1,20 +1,8 @@
 <resources>
-    <string name="app_name">Brain Training</string>
-    <string name="rount_counter_default_txt">10/10</string>
-    <string name="round_timer_default_txt">10:59</string>
-    <string name="score_layer_overall_txt">Overall</string>
-    <string name="score_layer_time_txt">Time</string>
-    <string name="main_scene_question_number_default_txt">Question:</string>
-    <string name="main_scene_real_question_default_txt">What was the name of the cat?</string>
-    <string name="answer_a_char_txt">A:</string>
-    <string name="answer_a_default">Nanny</string>
-    <string name="answer_b_char_txt">B:</string>
-    <string name="answer_c_char_txt">C:</string>
-    <string name="answer_d_char_txt">D:</string>
-    <string name="answer_b_default">Kitty</string>
-    <string name="answer_c_default">Sissy</string>
-    <string name="answer_d_default">Alonso</string>
-    <string name="btn_back_txt">Back</string>
-    <string name="btn_next_text">Next</string>
-    <string name="btn_submit_txt">Submit</string>
+    <string name="app_name">HelloAndroid</string>
+    <string name="wallpaper_description">wallpaper</string>
+    <string name="udacity_name">Udacity</string>
+    <string name="udacity_phone">650-555-5555</string>
+    <string name="udacity_website">www.udacity.com</string>
+    <string name="udacity_address">2465 Latham St, Mountain View, CA 94043</string>
 </resources>
