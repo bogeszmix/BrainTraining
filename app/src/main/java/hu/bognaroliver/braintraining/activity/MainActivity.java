@@ -2,8 +2,10 @@ package hu.bognaroliver.braintraining.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import static hu.bognaroliver.braintraining.data.FileScanner.readAnswerTxtFile;
 import static hu.bognaroliver.braintraining.data.FileScanner.readQuestionTxtFile;
 
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener
 {
 	//Java variables
 	private ArrayList<Question> quizList = new ArrayList<Question>();
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 	private ArrayList<Answer> answers = null;
 	private int i = 0;    //Current question number
 	private int rightAnswerScore = 0;
+	private String[] quizQuestionOrderBlueprint = new String[quizList.size()]; //We recreate the list when orientation is changed with this order.
 
 	//Reference to views
 	private LinearLayout mainSceneLayout;
@@ -59,10 +62,31 @@ public class MainActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
+		Log.d("#Process:OnCreate: ","Successful");
 		setContentView(R.layout.activity_main);
+
+		if (savedInstanceState != null)
+		{
+			quizQuestionOrderBlueprint = savedInstanceState.getStringArray("quizListBluePrint");
+			i = savedInstanceState.getInt("currentQuestionNumber");
+			rightAnswerScore = savedInstanceState.getInt("overallScore");
+			Log.d("#Process:LoadInstance ","Successful");
+		}
+
+		Log.d("#Process:setView: ","Successful");
 		inflateViewWithElements();
 		setValuesForViews();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle bundle)
+	{
+		super.onSaveInstanceState(bundle);
+		bundle.putStringArray("quizListBluePrint",getBluePrint());
+		bundle.putInt("currentQuestionNumber",i);
+		bundle.putInt("overallScore",rightAnswerScore);
+
+		Log.d("#Process:SaveInstance ","Successful");
 	}
 
 	/**
@@ -90,10 +114,9 @@ public class MainActivity extends AppCompatActivity
 			quizList.add(questionList.get(i));
 		}
 
-		//Randomize the items order in the array, and maximize the item quantity at 10
-		long seed = System.nanoTime();
-		Collections.shuffle(quizList, new Random(seed));
-		quizList.subList(0, 9);
+		Log.d("#Process:SetQuizlist ","Successful");
+
+		randomizeQuizList();
 
 	}
 
@@ -121,7 +144,90 @@ public class MainActivity extends AppCompatActivity
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnNext = (Button) findViewById(R.id.btn_next);
 		btnSubmit = (Button) findViewById(R.id.btn_submit);
+		Log.d("#Process:setVReference ","Successful");
 	}
+
+	/**
+	 * 	Randomize quiz list's questions and reinitialize by saved quiz element order
+	 */
+	private void randomizeQuizList()
+	{
+		ArrayList<Question> temp = new ArrayList<Question>();
+
+		if (getBluePrint().length == 0)
+		{
+			Log.d("#Process:Blueprint ","Not Already Exist");
+			long seed = System.nanoTime();
+			Collections.shuffle(quizList, new Random(seed));
+			quizList.subList(0, 9);
+
+			Log.d("#Process:invokeSetBP ","Start");
+			setBluePrint();
+			Log.d("#Process:invokeSetBP ","Finish");
+			Log.d("#Process:QListRandom ","Successful");
+		}
+
+		//Randomize the items order in the array, and maximize the item quantity at 10
+		if (getBluePrint().length > 0 )
+		{
+			Log.d("#Process:Blueprint ","Already Exist");
+
+
+			for(int i = 0; i < getBluePrint().length; i++)
+			{
+
+				for(int j = 0; j < quizList.size(); j++)
+				{
+					if ( Integer.valueOf(getBluePrint()[i]) == quizList.get(j).getQuestionId())
+					{
+						temp.add(quizList.get(j));
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Set blueprint of the item order which is needed to reinitalize the quiz
+	 * list when the orientation is changed.
+	 * @return Only generate the new blueprint, when
+	 * quizQuestionOrderBlueprint is not set. When it is already set the method return the setted
+	 * value itself.
+	 */
+	private void setBluePrint()
+	{
+		String newBluePrint = "";
+		String[] temp = new String[quizList.size()];
+
+		//Set the blueprint of the new shuffled list
+
+		if (! (quizQuestionOrderBlueprint.length > 0))
+		{
+			Log.d("#Process:setNewBprint ","Start");
+			int i = 0;
+			while (i < quizList.size())
+			{
+				newBluePrint += String.valueOf(quizList.get(i).getQuestionId());
+				i++;
+			}
+
+			//Instead of return quizQuestionOrderBlueprint = temp.split("");
+			for (int j = 0; j<newBluePrint.length(); j++)
+			{
+				temp[j] = String.valueOf(newBluePrint.charAt(j));
+			}
+
+			Log.d("#Process:setNewBprint ","Finish");
+
+			quizQuestionOrderBlueprint = temp;
+		}
+	}
+
+	/**
+		*Return the blueprint of the list order
+		* @return blueprint of the list order
+	 */
+	private String[] getBluePrint(){return quizQuestionOrderBlueprint;}
 
 	/**
 		*Check if the button is usable regarding to the round number
@@ -143,6 +249,8 @@ public class MainActivity extends AppCompatActivity
 			btnSubmit.setVisibility(View.INVISIBLE);
 		if (i == (quizList.size() - 1))
 			btnSubmit.setVisibility(View.VISIBLE);
+
+		Log.d("#Process:buildBtnStep ","Successful");
 	}
 
 	/**
@@ -158,6 +266,7 @@ public class MainActivity extends AppCompatActivity
 		secondAnswerTxt.setText(quizList.get(i).getAnswers().get(1).getAnswerContent());
 		thirdAnswerTxt.setText(quizList.get(i).getAnswers().get(2).getAnswerContent());
 		fourthAnswerTxt.setText(quizList.get(i).getAnswers().get(3).getAnswerContent());
+		Log.d("#Process:allVal2TextV ","Successful");
 	}
 
 	/**
@@ -220,6 +329,7 @@ public class MainActivity extends AppCompatActivity
 	 */
 	public void setTheRightAnswer(final int i)
 	{
+		Log.d("#Process:answerOptionCh","Start");
 		firstAnswerTap.setOnClickListener(new View.OnClickListener()
 		{
 			private boolean isAddedRightAnswerPoint = false; //To not add point twice or more
@@ -227,16 +337,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
-				firstAnswerRadioBtn.setChecked(true);
-				secondAnswerRadioBtn.setChecked(false);
-				thirdAnswerRadioBtn.setChecked(false);
-				fourthAnswerRadioBtn.setChecked(false);
-
-				if (isRightAnswer(i, 0) && !isAddedRightAnswerPoint)
-				{
-					rightAnswerScore++;
-					isAddedRightAnswerPoint = true;
-				}
+				setRadioButtonTrueOrFalse(0);
 			}
 		});
 		secondAnswerTap.setOnClickListener(new View.OnClickListener()
@@ -246,17 +347,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
-
-				firstAnswerRadioBtn.setChecked(false);
-				secondAnswerRadioBtn.setChecked(true);
-				thirdAnswerRadioBtn.setChecked(false);
-				fourthAnswerRadioBtn.setChecked(false);
-
-				if (isRightAnswer(i, 1) && !isAddedRightAnswerPoint)
-				{
-					rightAnswerScore++;
-					isAddedRightAnswerPoint = true;
-				}
+				setRadioButtonTrueOrFalse(1);
 			}
 		});
 		thirdAnswerTap.setOnClickListener(new View.OnClickListener()
@@ -266,16 +357,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
-				firstAnswerRadioBtn.setChecked(false);
-				secondAnswerRadioBtn.setChecked(false);
-				thirdAnswerRadioBtn.setChecked(true);
-				fourthAnswerRadioBtn.setChecked(false);
-
-				if (isRightAnswer(i, 2) && !isAddedRightAnswerPoint)
-				{
-					rightAnswerScore++;
-					isAddedRightAnswerPoint = true;
-				}
+				setRadioButtonTrueOrFalse(2);
 			}
 		});
 		fourthAnswerTap.setOnClickListener(new View.OnClickListener()
@@ -285,18 +367,11 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
-				firstAnswerRadioBtn.setChecked(false);
-				secondAnswerRadioBtn.setChecked(false);
-				thirdAnswerRadioBtn.setChecked(false);
-				fourthAnswerRadioBtn.setChecked(true);
-
-				if (isRightAnswer(i, 3) && !isAddedRightAnswerPoint)
-				{
-					rightAnswerScore++;
-					isAddedRightAnswerPoint = true;
-				}
+				setRadioButtonTrueOrFalse(3);
 			}
 		});
+
+		Log.d("#Process:answerOptionCh","Finish");
 	}
 
 	/**
@@ -307,13 +382,90 @@ public class MainActivity extends AppCompatActivity
 	 */
 	private boolean isRightAnswer(int i, int answerNumber)
 	{
+		Log.d("#Process:checkRAnsw","Start");
+
 		if (quizList.get(i).getAnswers().get(answerNumber).isTrueAnswer())
 		{
+			Log.d("#Process:checkTRAnsw","Finish");
 			return true;
 		} else
 		{
+			Log.d("#Process:checkFRAnsw","Finish");
 			return false;
 		}
 
+
 	}
+
+	/**
+	 *  Set the correct radiobutton marker true, and this works too with layout click
+	 *  @param btnRadioNumber which radio button is clicked
+	 */
+	private void setRadioButtonTrueOrFalse(int btnRadioNumber)
+	{
+		Log.d("#Process:rBtnToF","Start");
+		boolean isAddedRightAnswerPoint = false;
+		ArrayList<RadioButton> radioBtnList = new ArrayList<RadioButton>();
+		radioBtnList.add(firstAnswerRadioBtn);
+		radioBtnList.add(secondAnswerRadioBtn);
+		radioBtnList.add(thirdAnswerRadioBtn);
+		radioBtnList.add(fourthAnswerRadioBtn);
+
+
+
+		int i = 0;
+		while (i < radioBtnList.size())
+		{
+			radioBtnList.get(i).setOnCheckedChangeListener(this);
+
+			if (! (i == btnRadioNumber))
+			{
+				if ( isRightAnswer(this.i, i) && !isAddedRightAnswerPoint)
+				{
+					rightAnswerScore++;
+					Log.d("#Process:crntPoint: ", String.valueOf(rightAnswerScore));
+					isAddedRightAnswerPoint = true;
+				}
+				radioBtnList.get(i).setChecked(false);
+			}
+
+			if( i == btnRadioNumber)
+			{
+				radioBtnList.get(i).setChecked(true);
+			}
+
+			i++;
+		}
+
+		Log.d("#Process:rBtnToF","Finish");
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
+	{
+		if (isChecked)
+		{
+			switch (compoundButton.getId())
+			{
+				case R.id.first_answer_radio_btn:
+					setRadioButtonTrueOrFalse(0);
+					break;
+
+				case R.id.second_answer_radio_btn:
+					setRadioButtonTrueOrFalse(1);
+					break;
+
+				case R.id.third_answer_radio_btn:
+					setRadioButtonTrueOrFalse(2);
+					break;
+
+				case R.id.fourth_answer_radio_btn:
+					setRadioButtonTrueOrFalse(3);
+					break;
+
+				default: break;
+			}
+		}
+	}
+
 }

@@ -1,10 +1,10 @@
-1;What is your greatest strength?
-2;Why is the sky blue?
-3;How many times have Chelsea won Championship League?
-4;How many country has Hungary?
-5;What color is the sulfur?
-6;How many percent of the air is nitrogen?
-7;How high is the Empire State Building?
-8;Which is the latest version of Android at 2017?
-9;When was founded Udacity?
-10;When was John Neumann born?
+0;What is your greatest strength?
+1;Why is the sky blue?
+2;How many times have Chelsea won Championship League?
+3;How many country has Hungary?
+4;What color is the sulfur?
+5;How many percent of the air is nitrogen?
+6;How high is the Empire State Building?
+7;Which is the latest version of Android at 2017?
+8;When was founded Udacity?
+9;When was John Neumann born?
