@@ -423,7 +423,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 				if ( isRightAnswer(this.i, i) && !isAddedRightAnswerPoint)
 				{
 					rightAnswerScore++;
-					Log.d("#Process:crntPoint: ", String.valueOf(rightAnswerScore));
 					isAddedRightAnswerPoint = true;
 				}
 				radioBtnList.get(i).setChecked(false);
