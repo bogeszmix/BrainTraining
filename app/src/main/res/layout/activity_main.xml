@@ -17,10 +17,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="@dimen/main_txt_view_layout_height"
         android:layout_weight="1"
         android:paddingLeft="@dimen/main_txt_view_layout_pad_left"
         android:orientation="vertical">
+=======
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        android:paddingEnd="@dimen/upper_linearlayout_padding_right_portrait"
+        android:paddingLeft="@dimen/upper_linearlayout_padding_left_portrait"
+        android:paddingRight="@dimen/upper_linearlayout_padding_right_portrait"
+        android:paddingStart="@dimen/upper_linearlayout_padding_left_portrait">
+>>>>>>> parent of b900c36... Bug fixes
 
         <TextView
             android:layout_width="match_parent"
@@ -29,7 +38,32 @@
             android:text="@string/udacity_name"
             android:textColor="@color/main_text_color"/>
 
+<<<<<<< HEAD
         <TextView
+=======
+            <hu.bognaroliver.braintraining.helpers.TextViewRoboto
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/score_line_separator"
+                android:text="@string/score_layer_overall_txt"
+                android:textAllCaps="true"
+                android:textColor="@color/score_layer_txt_color"
+                android:textSize="@dimen/score_layer_txt_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideOverlay">
+
+        <LinearLayout
+            android:id="@+id/main_scene_layout"
+>>>>>>> parent of b900c36... Bug fixes
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/phone_num_txt_veiw_margin_bottom"

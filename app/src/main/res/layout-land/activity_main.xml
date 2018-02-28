@@ -17,10 +17,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="@dimen/txt_main_layout_height"
         android:layout_weight="2"
         android:paddingLeft="@dimen/txt_main_layout_pad_left"
         android:orientation="vertical">
+=======
+        android:layout_height="75dp"
+        android:paddingLeft="@dimen/upper_linearlayout_padding_left_portrait"
+        android:paddingRight="@dimen/upper_linearlayout_padding_right_portrait"
+        android:paddingStart="@dimen/upper_linearlayout_padding_left_portrait"
+        android:paddingEnd="@dimen/upper_linearlayout_padding_right_portrait"
+        android:background="@color/colorPrimary">
+>>>>>>> parent of b900c36... Bug fixes
 
         <TextView
             android:layout_width="match_parent"
@@ -29,7 +38,21 @@
             android:text="@string/udacity_name"
             android:textColor="@color/main_text_color"/>
 
+<<<<<<< HEAD
         <TextView
+=======
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideOverlay">
+
+        <LinearLayout
+            android:id="@+id/main_scene_layout"
+>>>>>>> parent of b900c36... Bug fixes
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/txt_view_margin_bottom"
